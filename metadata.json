@@ -1,0 +1,8 @@
+{
+  "name": "Conocernos también es crecer. ",
+  "description": "Aplicación interactiva de Educación Sexual Integral (ESI) para 6.º grado de primaria. Explora los cambios físicos, hormonales, emocionales y vinculares de la pubertad junto a Sofía y Mateo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
