@@ -87,7 +87,7 @@ export const TeacherDashboard: React.FC<P> = ({ isOpen, onClose, onLaunchProject
       return false;
     }
     const [responses, mailbox] = await Promise.all([
-      teacherSupabase.from('student_responses').select('id,student_id,activity,response,created_at,reviewed,students(first_name,last_name,course)').order('created_at', { ascending: false }),
+      teacherSupabase.from('student_responses').select('id,student_id,activity,response,created_at,reviewed,students(first_name,last_name,course,email)').order('created_at', { ascending: false }),
       teacherSupabase.from('anonymous_questions').select('*').order('created_at', { ascending: false }),
     ]);
     if (responses.error || mailbox.error) {
@@ -171,7 +171,7 @@ export const TeacherDashboard: React.FC<P> = ({ isOpen, onClose, onLaunchProject
 
   const filtered = items.filter((item) => {
     const student = item.students || {};
-    return (!search || `${student.first_name} ${student.last_name}`.toLowerCase().includes(search.toLowerCase()))
+    return (!search || `${student.email || ''} ${student.first_name || ''} ${student.last_name || ''}`.toLowerCase().includes(search.toLowerCase()))
       && (course === 'all' || student.course === course)
       && (activity === 'all' || item.activity === activity)
       && (!selected || selected === item.student_id);
@@ -217,14 +217,14 @@ export const TeacherDashboard: React.FC<P> = ({ isOpen, onClose, onLaunchProject
           {error && <p className="mb-3 text-sm text-rose-700" role="alert">{error}</p>}
           {tab === 'trabajos' && <>
             <div className="grid gap-2 sm:grid-cols-4">
-              <input aria-label="Buscar alumno" placeholder="Buscar alumno" value={search} onChange={(event) => setSearch(event.target.value)} className="rounded-xl border p-2" />
+              <input aria-label="Buscar alumno" placeholder="Buscar alumno o correo" value={search} onChange={(event) => setSearch(event.target.value)} className="rounded-xl border p-2" />
               <select aria-label="Filtrar por curso" value={course} onChange={(event) => setCourse(event.target.value)} className="rounded-xl border p-2"><option value="all">Todos los cursos</option>{[...new Set(items.map((item) => item.students?.course).filter(Boolean))].map((item) => <option key={item}>{item}</option>)}</select>
               <select aria-label="Filtrar por actividad" value={activity} onChange={(event) => setActivity(event.target.value)} className="rounded-xl border p-2"><option value="all">Todas las actividades</option>{[...new Set(items.map((item) => item.activity))].map((item) => <option key={item}>{item}</option>)}</select>
-              <select aria-label="Seleccionar alumno" value={selected} onChange={(event) => setSelected(event.target.value)} className="rounded-xl border p-2"><option value="">Todos los alumnos</option>{[...new Map(items.map((item) => [item.student_id, item.students])).entries()].map(([id, student]: any) => <option key={id} value={id}>{student?.last_name}, {student?.first_name} · {student?.course}</option>)}</select>
+              <select aria-label="Seleccionar alumno" value={selected} onChange={(event) => setSelected(event.target.value)} className="rounded-xl border p-2"><option value="">Todos los alumnos</option>{[...new Map(items.map((item) => [item.student_id, item.students])).entries()].map(([id, student]: any) => <option key={id} value={id}>{student?.email || `${student?.last_name || ''}, ${student?.first_name || ''} · ${student?.course || ''}`}</option>)}</select>
             </div>
             <div className="mt-4 space-y-4">{filtered.map((item) => <article key={item.id} className="overflow-hidden rounded-2xl border border-indigo-100 shadow-sm">
               <div className="flex flex-wrap items-start justify-between gap-3 border-b border-indigo-100 bg-indigo-50/60 p-4">
-                <div><p className="text-base font-bold text-slate-900">{item.students?.first_name} {item.students?.last_name}</p><p className="text-sm text-slate-600">{item.students?.course}</p><p className="mt-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-bold text-indigo-800">{item.activity}</p></div>
+                <div><p className="text-base font-bold text-slate-900">{item.students?.email || `${item.students?.first_name || ''} ${item.students?.last_name || ''}`.trim()}</p>{item.students?.course && <p className="text-sm text-slate-600">{item.students.course}</p>}<p className="mt-2 inline-flex rounded-full bg-white px-3 py-1 text-xs font-bold text-indigo-800">{item.activity}</p></div>
                 <div className="text-right"><time className="text-xs text-slate-600">{new Date(item.created_at).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' })}</time><p className={`mt-2 text-xs font-bold ${item.reviewed ? 'text-emerald-700' : 'text-amber-700'}`}>{item.reviewed ? '✓ Revisado' : 'Pendiente'}</p></div>
               </div>
               <div className="space-y-3 bg-slate-50/60 p-4"><p className="text-xs font-bold uppercase tracking-wide text-slate-500">Respuestas enviadas</p><ResponseViewer response={item.response} /></div>
