@@ -299,6 +299,11 @@ export const EVERYDAY_SITUATIONS: EverydaySituation[] = [
             reflection: 'Muy buena observación: cuando alguien no expresa lo que le pasa, el otro puede atribuírselo a sí mismo.',
             isConstructive: true,
           },
+          {
+            text: 'Su amiga cree que el silencio siempre significa que Sofía quiere estar sola y que no hace falta preguntarle cómo se siente.',
+            reflection: 'Aunque la amiga quiera respetar su espacio, no puede saber con seguridad qué necesita Sofía sin preguntarle. Conversar con cuidado ayuda a evitar suposiciones.',
+            isConstructive: false,
+          },
         ],
       },
       {
@@ -354,6 +359,11 @@ export const EVERYDAY_SITUATIONS: EverydaySituation[] = [
             text: 'En un desacuerdo se debate sobre el juego o la regla sin descalificar. El maltrato ataca a la persona con insultos o burlas para hacerla sentir mal.',
             reflection: '¡Distinción clave! Se puede estar en desacuerdo con fuerza, pero siempre cuidando la dignidad del otro.',
             isConstructive: true,
+          },
+          {
+            text: 'Si alguien se enoja durante una discusión, entonces ya hay maltrato, aunque las personas sigan hablando sin insultarse ni burlarse.',
+            reflection: 'Sentir enojo no significa por sí solo maltratar. Lo importante es cómo tratamos a la otra persona: podemos expresar desacuerdo sin atacarla.',
+            isConstructive: false,
           },
         ],
       },
@@ -411,6 +421,11 @@ export const EVERYDAY_SITUATIONS: EverydaySituation[] = [
             reflection: '¡Regla fundamental de la ESI y la convivencia humana! Ningún cuerpo está en exhibición para el comentario ajeno.',
             isConstructive: true,
           },
+          {
+            text: 'Se puede opinar sobre el cuerpo de otra persona cuando el comentario es positivo y se dice con buena intención.',
+            reflection: 'Incluso un comentario positivo puede incomodar. La regla es respetar la intimidad y no evaluar los cuerpos ajenos.',
+            isConstructive: false,
+          },
         ],
       },
       {
@@ -451,6 +466,11 @@ export const EVERYDAY_SITUATIONS: EverydaySituation[] = [
             reflection: 'Muy cierto. Compararse con los amigos que empezaron antes genera una preocupación innecesaria.',
             isConstructive: true,
           },
+          {
+            text: 'Se siente preocupado porque cree que crecer antes que los demás siempre significa estar más sano.',
+            reflection: 'El ritmo de crecimiento no permite comparar la salud de dos personas. Cada cuerpo tiene sus propios tiempos y, si hay dudas, puede conversar con una persona adulta de confianza.',
+            isConstructive: false,
+          },
         ],
       },
       {
@@ -462,6 +482,11 @@ export const EVERYDAY_SITUATIONS: EverydaySituation[] = [
             reflection: '¡Exacto! El reloj biológico de cada uno está programado por su propia genética y desarrollo.',
             isConstructive: true,
           },
+          {
+            text: 'La pubertad tiene un único calendario y Mateo debería comparar su cuerpo con el de sus compañeros para saber cuándo le tocará crecer.',
+            reflection: 'No existe un calendario único para todas las personas, y compararse no permite predecir el crecimiento. Cada proceso es distinto.',
+            isConstructive: false,
+          },
         ],
       },
       {
@@ -472,6 +497,11 @@ export const EVERYDAY_SITUATIONS: EverydaySituation[] = [
             text: 'Con su familia, su pediatra o el profe de educación física, quienes le explicarán con calma cómo funciona el crecimiento.',
             reflection: '¡Tal cual! Preguntar a adultos de confianza disuelve los miedos mucho mejor que quedarse rumiando solo.',
             isConstructive: true,
+          },
+          {
+            text: 'Con un compañero, para comparar sus cuerpos y decidir entre los dos si alguno está creciendo demasiado lento.',
+            reflection: 'Es mejor no comparar los cuerpos entre compañeros para sacar conclusiones. Una persona adulta de confianza puede escuchar sus dudas y orientarlo.',
+            isConstructive: false,
           },
         ],
       },
