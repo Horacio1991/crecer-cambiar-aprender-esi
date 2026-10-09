@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
+﻿import React, { useEffect, useState } from 'react';
+import { teacherSupabase } from '../lib/supabase';
 import { EverydaySituation } from '../types';
 import { EVERYDAY_SITUATIONS, TEACHER_GUIDE } from '../data/curriculumData';
 import { ResponseViewer } from './ResponseViewer';
@@ -36,7 +36,7 @@ export const TeacherDashboard: React.FC<P> = ({ isOpen, onClose, onLaunchProject
   // Supabase persists the browser session. Restore it on app startup and keep
   // React state in sync with refreshes, expiry, and manual sign-out.
   useEffect(() => {
-    const client = supabase;
+    const client = teacherSupabase;
     if (!client) {
       setAuthStatus('signedOut');
       return;
@@ -82,13 +82,13 @@ export const TeacherDashboard: React.FC<P> = ({ isOpen, onClose, onLaunchProject
   }, []);
 
   const load = async (): Promise<boolean> => {
-    if (!supabase) {
+    if (!teacherSupabase) {
       setError('Supabase no está configurado.');
       return false;
     }
     const [responses, mailbox] = await Promise.all([
-      supabase.from('student_responses').select('id,student_id,activity,response,created_at,reviewed,students(first_name,last_name,course)').order('created_at', { ascending: false }),
-      supabase.from('anonymous_questions').select('*').order('created_at', { ascending: false }),
+      teacherSupabase.from('student_responses').select('id,student_id,activity,response,created_at,reviewed,students(first_name,last_name,course)').order('created_at', { ascending: false }),
+      teacherSupabase.from('anonymous_questions').select('*').order('created_at', { ascending: false }),
     ]);
     if (responses.error || mailbox.error) {
       setError('No se pudieron cargar los datos. Revisá la conexión y los permisos de la cuenta docente.');
@@ -108,18 +108,18 @@ export const TeacherDashboard: React.FC<P> = ({ isOpen, onClose, onLaunchProject
 
   const login = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!supabase) {
+    if (!teacherSupabase) {
       setError('Supabase no está configurado.');
       return;
     }
-    const { data, error: loginError } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    const { data, error: loginError } = await teacherSupabase.auth.signInWithPassword({ email: email.trim(), password });
     if (loginError || !data.session) {
       setError('No se pudo iniciar sesión. Revisá el correo y la contraseña.');
       return;
     }
     if (data.session.user.app_metadata?.role !== 'docente') {
       setError('Esta cuenta no tiene permisos docentes.');
-      await supabase.auth.signOut();
+      await teacherSupabase.auth.signOut();
       setSession(null);
       setAuthStatus('forbidden');
       return;
@@ -178,12 +178,12 @@ export const TeacherDashboard: React.FC<P> = ({ isOpen, onClose, onLaunchProject
   });
 
   const update = async (id: string, reviewed: boolean) => {
-    const { error: updateError } = await supabase!.from('student_responses').update({ reviewed }).eq('id', id);
+    const { error: updateError } = await teacherSupabase!.from('student_responses').update({ reviewed }).eq('id', id);
     if (updateError) setError('No se pudo guardar el estado de revisión.');
     else await load();
   };
   const remove = async (id: string) => {
-    const { error: deleteError } = await supabase!.from('student_responses').delete().eq('id', id);
+    const { error: deleteError } = await teacherSupabase!.from('student_responses').delete().eq('id', id);
     if (deleteError) setError('No se pudo eliminar la respuesta.');
     else await load();
   };
@@ -211,7 +211,7 @@ export const TeacherDashboard: React.FC<P> = ({ isOpen, onClose, onLaunchProject
             <button onClick={() => setTab('guia')} className="rounded bg-amber-50 px-3 py-2">Guía docente</button>
             <button onClick={() => setTab('acceso')} className="rounded bg-emerald-50 px-3 py-2">Expediente 2</button>
             <button onClick={refreshResponses} disabled={refreshing} aria-label="Actualizar respuestas y buzón" className="ml-auto rounded-xl bg-indigo-700 px-4 py-2 font-semibold text-white disabled:cursor-wait disabled:opacity-60">{refreshing ? 'Actualizando...' : '🔄 Actualizar respuestas'}</button>
-            <button onClick={async () => { await supabase?.auth.signOut(); setSession(null); setAuthStatus('signedOut'); setError(''); }} className="rounded-xl border px-3 py-2">Salir</button>
+            <button onClick={async () => { await teacherSupabase?.auth.signOut(); setSession(null); setAuthStatus('signedOut'); setError(''); }} className="rounded-xl border px-3 py-2">Salir</button>
           </div>
           {refreshNotice && <p className="mb-3 text-sm text-emerald-700" role="status">{refreshNotice}</p>}
           {error && <p className="mb-3 text-sm text-rose-700" role="alert">{error}</p>}

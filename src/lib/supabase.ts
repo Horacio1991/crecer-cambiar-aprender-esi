@@ -3,11 +3,25 @@ import { createClient } from '@supabase/supabase-js';
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
+// Cliente para alumnos: nunca conserva una sesión autenticada.
+// Así los INSERT de alumnos siguen usando el rol anon aunque haya un docente
+// con sesión iniciada en el mismo navegador.
 export const supabase = url && anonKey ? createClient(url, anonKey, {
+  auth: {
+    persistSession: false,
+    autoRefreshToken: false,
+    detectSessionInUrl: false,
+  },
+}) : null;
+
+// Cliente exclusivo del panel docente.
+// Conserva la sesión en una clave separada para que no interfiera con alumnos.
+export const teacherSupabase = url && anonKey ? createClient(url, anonKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
     detectSessionInUrl: true,
+    storageKey: 'cca_teacher_auth',
   },
 }) : null;
 
