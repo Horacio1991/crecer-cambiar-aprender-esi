@@ -280,7 +280,7 @@ Debes responder en formato JSON estrictamente vÃ¡lido con los campos:
 
         let geminiResponse;
         try {
-          geminiResponse = await askGemini('gemini-3.8-flash', 4500, true);
+          geminiResponse = await askGemini('gemini-3.8-flash', 10000, true);
         } catch (primaryError) {
           console.warn('[Gemini] gemini-3.8-flash fallÃ³; probando gemini-3.5-flash-lite:', primaryError);
           geminiResponse = await askGemini('gemini-3.5-flash-lite', 10000, false);
@@ -341,4 +341,5 @@ async function startServer() {
 }
 
 startServer();
+
 
