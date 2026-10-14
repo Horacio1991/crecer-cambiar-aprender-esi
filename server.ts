@@ -52,7 +52,7 @@ function classifyLocally(question: string, reproductionUnlocked: boolean) {
   const qLower = question.toLowerCase();
 
   // Urgent / Safety check
-  const safetyKeywords = ['abuso', 'violencia', 'golpe', 'tocar sin permiso', 'obligar', 'acoso', 'miedo en casa', 'secreto malo'];
+  const safetyKeywords = ['abuso', 'violencia', 'golpe', 'tocar sin permiso', 'tocó sin permiso', 'toque sin permiso', 'obligar', 'obligó', 'forzar', 'forzó', 'acoso', 'amenaza', 'presión', 'presionar', 'sin consentimiento', 'sin mi permiso', 'foto íntima', 'fotos íntimas', 'imagen íntima', 'miedo en casa', 'secreto malo'];
   if (safetyKeywords.some((kw) => qLower.includes(kw))) {
     return {
       category: 'H. Tema que requiere intervención adulta',
@@ -95,7 +95,7 @@ function classifyLocally(question: string, reproductionUnlocked: boolean) {
       return {
         category: 'G. Reproducción habilitada',
         categoryKey: 'reproduction_unlocked',
-        answer: 'En el Expediente 2 investigamos cómo los sistemas reproductores femenino y masculino maduran durante la pubertad gracias a las hormonas. Los ovarios y los testículos producen células especializadas (óvulos y espermatozoides). En la reproducción humana, cuando se unen en la fecundación, dan origen al desarrollo de una nueva vida.',
+        answer: 'En el Expediente 2 investigamos cómo distintas estructuras de la anatomía reproductiva maduran durante la pubertad gracias a las hormonas. Los ovarios pueden producir óvulos y los testículos espermatozoides. En la reproducción humana, la fecundación ocurre cuando estas células reproductoras se unen; describir estos órganos o procesos no determina la identidad de género de una persona.',
         companion: 'Sofía y Mateo: "La reproducción es un proceso biológico que estudiamos con respeto y lenguaje científico."'
       };
     }
@@ -203,7 +203,20 @@ app.post('/api/ask-question', async (req, res) => {
 
     const cleanQuestion = question.trim();
 
-    // Check if reproduction lock applies explicitly first
+    // Seguridad, límites, consentimiento y vulneraciones tienen prioridad incluso con Expediente 2 bloqueado.
+    const cleanLower = cleanQuestion.toLowerCase();
+    const safetyPriorityWords = ['abuso','violencia','golpe','tocar sin permiso','tocó sin permiso','toque sin permiso','obligar','obligó','forzar','forzó','acoso','amenaza','presión','presionar','sin consentimiento','sin mi permiso','foto íntima','fotos íntimas','imagen íntima','miedo en casa','secreto malo'];
+    if (safetyPriorityWords.some((w) => cleanLower.includes(w))) {
+      return res.json({
+        category: 'H. Tema que requiere intervención adulta',
+        answer: 'Tu seguridad, tus límites y tus derechos son lo más importante. Nadie debe obligarte, presionarte, tocarte sin permiso, amenazarte ni pedirte imágenes íntimas. Si algo así ocurrió o te preocupa, contáselo cuanto antes a una persona adulta de confianza de tu familia o de la escuela para que pueda acompañarte y ayudarte.',
+        companionQuote: 'Sofía y Mateo: "Pedir ayuda cuando algo nos incomoda o nos hace sentir en peligro es una forma de cuidarnos."',
+        reflectionQuestion: '¿Qué persona adulta de confianza podría ayudarte a estar acompañado/a y seguro/a?',
+        reproductionBlocked: false,
+      });
+    }
+
+    // Después de seguridad se aplica el bloqueo pedagógico de reproducción.
     const reproWords = ['fecundación', 'óvulo', 'espermatozoide', 'embarazo', 'útero', 'trompas de falopio', 'relación sexual', 'sexo', 'genitales internos', 'fecundar', 'parto'];
     const isReproQuery = reproWords.some((w) => cleanQuestion.toLowerCase().includes(w));
 
@@ -228,6 +241,10 @@ Responder a las dudas de las y los estudiantes con:
 - Lenguaje científico, claro, respetuoso, cálido y adecuado para 11 y 12 años.
 - Cero infantilización, cero moralina, cero generar miedo o vergüenza.
 - Diferenciar cambios FÍSICOS, EMOCIONALES y VINCULARES.
+- Integrar transversalmente los 5 ejes de la ESI cuando sean pertinentes: CUIDAR EL CUERPO Y LA SALUD; VALORAR LA AFECTIVIDAD; RESPETAR LA DIVERSIDAD; RECONOCER LA PERSPECTIVA DE GÉNERO Y PROMOVER LA EQUIDAD; EJERCER NUESTROS DERECHOS.
+- No presentar emociones como buenas o malas ni imponer una única interpretación emocional.
+- Priorizar situaciones ficticias y preguntas abiertas. NUNCA pedir experiencias íntimas, prácticas sexuales, detalles del cuerpo, imágenes ni información privada.
+- Anatomía e identidad de género son dimensiones diferentes. Usar expresiones anatómicas precisas solo cuando sean científicamente relevantes y nunca como etiquetas de identidad.
 - Diversidad: Enfatizar que no todos los cuerpos crecen al mismo tiempo ni de la misma manera; no hay un "cuerpo normal" único. Evitar estereotipos ("los varones hacen...", "las mujeres sienten..."). Usar "algunas personas...", "en muchas personas...".
 - Si preguntan "¿Es normal que me pase esto?" o dudan de su cuerpo: NO diagnosticar enfermedades ni tratamientos. Responder con calidez que los ritmos son variados y que si algo duele o preocupa, es fundamental hablar con una persona adulta de confianza o profesional de salud.
 - SEGURIDAD ESTRICTA: No solicitar fotos, descripciones íntimas, ni datos personales. Si hay indicios de acoso, violencia o maltrato, indicar con calidez acudir inmediatamente a un adulto de confianza o docentes.

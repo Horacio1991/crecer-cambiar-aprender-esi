@@ -33,6 +33,7 @@ export interface EverydaySituation {
     }[];
   }[];
   keyTakeaway: string;
+  esiAxes?: string[];
   tag: 'Privacidad y Emociones' | 'Amistad y Desacuerdos' | 'Respeto al Cuerpo' | 'Límites y Grupos' | 'Tiempos Propios';
 }
 

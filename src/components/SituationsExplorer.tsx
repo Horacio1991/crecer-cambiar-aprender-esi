@@ -120,6 +120,17 @@ export const SituationsExplorer: React.FC<SituationsExplorerProps> = ({
           </div>
         </div>
 
+        {activeSituation.esiAxes && activeSituation.esiAxes.length > 0 && (
+          <div className="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-indigo-700 mb-2">Ejes de la ESI que atraviesan este caso</p>
+            <div className="flex flex-wrap gap-2">
+              {activeSituation.esiAxes.map((axis) => (
+                <span key={axis} className="rounded-full border border-indigo-200 bg-white px-3 py-1 text-[11px] font-semibold text-indigo-800">{axis}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Guiding Questions */}
         <div className="space-y-6">
           <h4 className="text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">

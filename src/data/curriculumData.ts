@@ -94,7 +94,7 @@ export const LEVELS: LevelModule[] = [
       {
         title: 'Desarrollo del pecho y genitales',
         description:
-          'En los cuerpos femeninos se produce el desarrollo de las mamas (a menudo un pecho crece antes que el otro, lo cual es normal). En los cuerpos masculinos crecen los testículos y el pene. También pueden comenzar la menstruación y las primeras eyaculaciones (o emisiones nocturnas).',
+          'Durante la pubertad pueden desarrollarse las mamas (a menudo una antes que la otra, lo cual puede ocurrir normalmente). En personas con útero y ovarios puede comenzar la menstruación; en personas con testículos pueden comenzar las primeras eyaculaciones o emisiones nocturnas. También pueden crecer el pene y los testículos. Estas características anatómicas describen procesos corporales y no determinan por sí solas la identidad de género de una persona.',
         sofiaOrMateo: 'sofia',
         quote: '“Saber qué puede ocurrir antes de que pase te da tranquilidad y te saca el miedo a lo desconocido.”',
       },
@@ -223,17 +223,17 @@ export const EXPEDIENTE_2_DATA = {
     },
     {
       number: '2',
-      title: 'Sistema reproductor femenino',
+      title: 'Anatomía reproductiva: vulva, vagina, útero y ovarios',
       description:
-        'Está integrado por órganos externos (vulva: labios mayores y menores, clítoris, meato urinario y orificio vaginal) y órganos internos (vagina, útero, trompas de Falopio y ovarios).',
+        'En algunas personas, la anatomía reproductiva incluye estructuras externas como la vulva (labios mayores y menores, clítoris, meato urinario y orificio vaginal) e internas como vagina, útero, trompas de Falopio y ovarios. Describir estos órganos no define la identidad de género de una persona.',
       detail:
         'Los ovarios almacenan y maduran los óvulos. Cada mes, en el ciclo menstrual, un óvulo maduro viaja por la trompa de Falopio hacia el útero, cuyo revestimiento interno (endometrio) se prepara. Si no hay fecundación, ese tejido se desprende produciendo la menstruación.',
     },
     {
       number: '3',
-      title: 'Sistema reproductor masculino',
+      title: 'Anatomía reproductiva: pene, testículos y conductos',
       description:
-        'Está integrado por el pene y el escroto (que contiene y protege a los testículos), junto con conductos internos (epidídimos, conductos deferentes, vesículas seminales y próstata).',
+        'En algunas personas, la anatomía reproductiva incluye pene, escroto y testículos, junto con estructuras internas como epidídimos, conductos deferentes, vesículas seminales y próstata. Describir estos órganos no define la identidad de género de una persona.',
       detail:
         'Los testículos producen espermatozoides y testosterona. Los espermatozoides se mezclan con líquidos nutritivos producidos por la próstata y las vesículas seminales formando el semen, que puede salir del cuerpo a través de la uretra mediante la eyaculación.',
     },
@@ -270,6 +270,7 @@ export const EVERYDAY_SITUATIONS: EverydaySituation[] = [
     title: 'Sofía y la necesidad de un momento a solas',
     protagonist: 'sofia',
     tag: 'Privacidad y Emociones',
+    esiAxes: ['Valorar la afectividad', 'Ejercer nuestros derechos', 'Cuidar el cuerpo y la salud'],
     context: 'Al terminar la clase de gimnasia, en el aula.',
     story:
       'Sofía tuvo un día agotador: siente que le duele la cabeza, le costó concentrarse y solo quiere sentarse en silencio en un rincón del patio a leer o pensar. Una amiga se acerca a contarle una anécdota y, al ver que Sofía no le contesta con entusiasmo, piensa que Sofía está enojada con ella o que ya no quiere ser su amiga.',
@@ -331,6 +332,7 @@ export const EVERYDAY_SITUATIONS: EverydaySituation[] = [
     title: 'Mateo y el desacuerdo durante el recreo',
     protagonist: 'mateo',
     tag: 'Amistad y Desacuerdos',
+    esiAxes: ['Valorar la afectividad', 'Ejercer nuestros derechos', 'Respetar la diversidad'],
     context: 'En el patio escolar a la hora del recreo largo.',
     story:
       'Mateo quería jugar a la mancha cadena con todo el grupo, pero su mejor amigo quería jugar a la pelota en la cancha chica. Empezaron a discutir levantando la voz: "¿Siempre querés hacer lo que vos querés!", le dijo su amigo. Mateo se sintió herido y le dieron ganas de gritarle algo feo.',
@@ -392,6 +394,7 @@ export const EVERYDAY_SITUATIONS: EverydaySituation[] = [
     title: 'Comentarios sobre el cuerpo de una compañera',
     protagonist: 'compartida',
     tag: 'Respeto al Cuerpo',
+    esiAxes: ['Cuidar el cuerpo y la salud', 'Respetar la diversidad', 'Ejercer nuestros derechos', 'Perspectiva de género y equidad'],
     context: 'En la fila antes de entrar al salón de música.',
     story:
       'Una compañera comenzó a experimentar el desarrollo de su cuerpo antes que la mayoría del grupo (creció más rápido de estatura y sus mamas empezaron a notarse). En la fila, un grupito de chicos empezó a mirarla, a murmurar y a hacer chistes en voz baja sobre su cambio. La compañera bajó la cabeza, cruzó los brazos para taparse y se puso muy incómoda.',
@@ -453,6 +456,7 @@ export const EVERYDAY_SITUATIONS: EverydaySituation[] = [
     title: 'Mateo y el miedo a no haber "pegado el estirón"',
     protagonist: 'mateo',
     tag: 'Tiempos Propios',
+    esiAxes: ['Cuidar el cuerpo y la salud', 'Respetar la diversidad', 'Valorar la afectividad'],
     context: 'En el vestuario de educación física.',
     story:
       'Mateo vio que dos amigos de su equipo ya tienen la voz mucho más grave y crecieron casi diez centímetros en los últimos meses. Mateo se mira al espejo y siente que sigue casi igual que en 5.º grado. Se pregunta con angustia: "¿Tendré algún problema de salud? ¿Por qué a ellos sí y a mí no?".',
