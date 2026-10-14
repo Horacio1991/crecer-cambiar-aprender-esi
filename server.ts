@@ -262,24 +262,30 @@ Debes responder en formato JSON estrictamente válido con los campos:
 }
 `;
 
-        const geminiStartedAt = Date.now();
-
-        const geminiResponse = await ai.models.generateContent({
-          model: 'gemini-3.8-flash',
-          contents: cleanQuestion,
-          config: {
-            systemInstruction,
-            responseMimeType: 'application/json',
-            thinkingConfig: {
-              thinkingLevel: ThinkingLevel.LOW,
+        const askGemini = async (model: string, timeout: number, useLowThinking: boolean) => {
+          const startedAt = Date.now();
+          const geminiResponse = await ai.models.generateContent({
+            model,
+            contents: cleanQuestion,
+            config: {
+              systemInstruction,
+              responseMimeType: 'application/json',
+              ...(useLowThinking ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } } : {}),
+              httpOptions: { timeout },
             },
-            httpOptions: {
-              timeout: 10000,
-            },
-          },
-        });
+          });
+          console.info('[Gemini] ' + model + ' OK en ' + (Date.now() - startedAt) + ' ms');
+          return geminiResponse;
+        };
 
-        console.info('[Gemini] OK en ' + (Date.now() - geminiStartedAt) + ' ms');
+        let geminiResponse;
+        try {
+          geminiResponse = await askGemini('gemini-3.8-flash', 4500, true);
+        } catch (primaryError) {
+          console.warn('[Gemini] gemini-3.8-flash falló; probando gemini-3.5-flash-lite:', primaryError);
+          geminiResponse = await askGemini('gemini-3.5-flash-lite', 6000, false);
+        }
+
         const text = geminiResponse.text;
         if (text) {
           const parsed = JSON.parse(text);
@@ -292,7 +298,7 @@ Debes responder en formato JSON estrictamente válido con los campos:
           });
         }
       } catch (geminiError) {
-        console.warn('[Gemini] Falló o superó 10000 ms; usando fallback local:', geminiError);
+        console.warn('[Gemini] Ambos modelos fallaron; usando fallback local:', geminiError);
       }
     }
 
