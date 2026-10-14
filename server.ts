@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenAI, ThinkingLevel } from '@google/genai';
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 import { EXPEDIENTE_2_DATA } from './src/data/curriculumData';
@@ -270,9 +270,11 @@ Debes responder en formato JSON estrictamente válido con los campos:
           config: {
             systemInstruction,
             responseMimeType: 'application/json',
-            temperature: 0.3,
+            thinkingConfig: {
+              thinkingLevel: ThinkingLevel.LOW,
+            },
             httpOptions: {
-              timeout: 4500,
+              timeout: 10000,
             },
           },
         });
@@ -290,7 +292,7 @@ Debes responder en formato JSON estrictamente válido con los campos:
           });
         }
       } catch (geminiError) {
-        console.warn('[Gemini] Falló o superó 4500 ms; usando fallback local:', geminiError);
+        console.warn('[Gemini] Falló o superó 10000 ms; usando fallback local:', geminiError);
       }
     }
 
