@@ -262,6 +262,8 @@ Debes responder en formato JSON estrictamente válido con los campos:
 }
 `;
 
+        const geminiStartedAt = Date.now();
+
         const geminiResponse = await ai.models.generateContent({
           model: 'gemini-3.8-flash',
           contents: cleanQuestion,
@@ -269,9 +271,13 @@ Debes responder en formato JSON estrictamente válido con los campos:
             systemInstruction,
             responseMimeType: 'application/json',
             temperature: 0.3,
+            httpOptions: {
+              timeout: 4500,
+            },
           },
         });
 
+        console.info('[Gemini] OK en ' + (Date.now() - geminiStartedAt) + ' ms');
         const text = geminiResponse.text;
         if (text) {
           const parsed = JSON.parse(text);
@@ -284,7 +290,7 @@ Debes responder en formato JSON estrictamente válido con los campos:
           });
         }
       } catch (geminiError) {
-        console.warn('Gemini request failed, falling back to local expert classifier:', geminiError);
+        console.warn('[Gemini] Falló o superó 4500 ms; usando fallback local:', geminiError);
       }
     }
 
