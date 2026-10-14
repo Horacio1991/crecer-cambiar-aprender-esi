@@ -1,6 +1,7 @@
-import React from 'react';
+﻿import React from 'react';
 import {
   Compass,
+  Map,
   BookOpen,
   HelpCircle,
   ShieldAlert,
@@ -34,6 +35,7 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const navItems = [
     { id: 'inicio', label: 'Inicio', icon: Compass, color: 'text-amber-700' },
+    { id: 'ejes', label: 'Ejes de la ESI', icon: Map, color: 'text-indigo-700' },
     { id: 'niveles', label: '5 Niveles de Crecer', icon: BookOpen, color: 'text-emerald-700' },
     { id: 'situaciones', label: 'Situaciones del Aula', icon: Users, color: 'text-sky-700' },
     { id: 'detective', label: 'Detective de Cambios', icon: Search, color: 'text-purple-700' },

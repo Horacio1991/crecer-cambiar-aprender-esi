@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { CharacterBanner } from './components/CharacterBanner';
 import { LevelViewer } from './components/LevelViewer';
 import { SituationsExplorer } from './components/SituationsExplorer';
+import { EsiAxesSection } from './components/EsiAxesSection';
 import { ChangeDetectiveQuiz } from './components/ChangeDetectiveQuiz';
 import { QuestionMailbox } from './components/QuestionMailbox';
 import { ExpedienteDosSection } from './components/ExpedienteDosSection';
@@ -235,6 +236,9 @@ export default function App() {
 
           </div>
         )}
+
+        {/* EJES DE LA ESI */}
+        {currentTab === 'ejes' && <EsiAxesSection onSubmitActivity={submitActivity} />}
 
         {/* TAB 2: LOS 5 NIVELES DE CRECER */}
         {currentTab === 'niveles' && <LevelViewer onSubmitActivity={submitActivity} />}
